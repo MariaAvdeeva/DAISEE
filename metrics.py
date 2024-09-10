@@ -4,7 +4,7 @@ import pandas as pd
 import anndata
 
 import pyliger
-from DAISEE import *
+from factorize import *
 
 from sklearn.decomposition import NMF, FastICA
 from sklearn.preprocessing import StandardScaler
@@ -37,10 +37,10 @@ def calcAgreement(object, H_norm, cur, samples,dr_method="NMF",
         for samp in samples:#np.unique(cur.obs['sample']):
             nmf = NMF(n_components=ndims, random_state=rand_seed)
             dr.append(nmf.fit_transform(cur[cur.obs['sample'] == samp,:].layers['scaled_by_sample']))
-    print('Transformed')
+    #print('Transformed')
     ns = [dr_i.shape[0] for dr_i in dr]
     n = sum(ns)
-    print(ns)
+    #print(ns)
     jaccard_inds = []
     distorts = []
 
@@ -130,8 +130,8 @@ def calcAlignment(object, H_norm, dataset, k=None,
     num_same_dataset = np.full(num_sampled, k)
     
     alignment_per_cell = np.empty(num_sampled)
-    print(k)
-    print(num_sampled)
+    #print(k)
+    #print(num_sampled)
     rel_dat = np.ravel(dataset.loc[sampled_cells])
 
     neigh = knn_graph.kneighbors(nmf_factors.loc[sampled_cells], return_distance = False)
